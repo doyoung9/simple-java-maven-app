@@ -36,7 +36,14 @@ mvn install
 NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)
 VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
-echo "JAR file path: $(realpath target/${NAME}-${VERSION}.jar)"
+# Remove non-printable characters and color codes
+NAME_CLEAN=$(echo "$NAME" | tr -d '\[\033[0m')
+VERSION_CLEAN=$(echo "$VERSION" | tr -d '\[\033[0m')
+
+echo "JAR file path: $(realpath target/${NAME_CLEAN}-${VERSION_CLEAN}.jar)"
 
 # Run the Java application
-java -jar target/${NAME}-${VERSION}.jar
+java -jar target/${NAME_CLEAN}-${VERSION_CLEAN}.jar
+
+# Run the Java application
+#java -jar target/${NAME}-${VERSION}.jar
