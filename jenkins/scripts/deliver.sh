@@ -33,18 +33,15 @@ echo 'This script installs and runs a Maven-built Java application'
 mvn install
 
 # Get the name and version of the project from the pom.xml
-NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)
-VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-
-# Remove non-printable characters and color codes
-NAME_CLEAN=$(echo "$NAME" | tr -d '\[\033[0m')
-VERSION_CLEAN=$(echo "$VERSION" | tr -d '\[\033[0m')
+NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout | tr -d '\r')
+VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tr -d '\r')
 
 # Debug: Print extracted NAME and VERSION
-echo "Extracted NAME: $NAME_CLEAN"
-echo "Extracted VERSION: $VERSION_CLEAN"
+echo "Extracted NAME: $NAME"
+echo "Extracted VERSION: $VERSION"
 
 # Run the Java application
-java -jar target/${NAME_CLEAN}-${VERSION_CLEAN}.jar
+java -jar target/${NAME}-${VERSION}.jar
+
 # Run the Java application
 #java -jar target/${NAME}-${VERSION}.jar
