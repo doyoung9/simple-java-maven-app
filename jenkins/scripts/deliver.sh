@@ -40,10 +40,11 @@ VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 NAME_CLEAN=$(echo "$NAME" | tr -d '\[\033[0m')
 VERSION_CLEAN=$(echo "$VERSION" | tr -d '\[\033[0m')
 
-echo "JAR file path: $(realpath target/${NAME_CLEAN}-${VERSION_CLEAN}.jar)"
+# Debug: Print extracted NAME and VERSION
+echo "Extracted NAME: $NAME_CLEAN"
+echo "Extracted VERSION: $VERSION_CLEAN"
 
 # Run the Java application
 java -jar target/${NAME_CLEAN}-${VERSION_CLEAN}.jar
-
 # Run the Java application
 #java -jar target/${NAME}-${VERSION}.jar
