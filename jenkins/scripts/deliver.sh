@@ -36,5 +36,7 @@ mvn install
 NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)
 VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
+echo "JAR file path: $(realpath target/${NAME}-${VERSION}.jar)"
+
 # Run the Java application
 java -jar target/${NAME}-${VERSION}.jar
