@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+<<com
 echo 'The following Maven command installs your Maven-built Java application'
 echo 'into the local Maven repository, which will ultimately be stored in'
 echo 'Jenkins''s local Maven repository (and the "maven-repository" Docker data'
@@ -25,3 +26,15 @@ echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
 #java -jar target/${NAME}-${VERSION}.jar
 java -jar target/${VERSION}.jar
+com
+echo 'This script installs and runs a Maven-built Java application'
+
+# Install the Maven artifact into the local Maven repository
+mvn install
+
+# Get the name and version of the project from the pom.xml
+NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)
+VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+
+# Run the Java application
+java -jar target/${NAME}-${VERSION}.jar
